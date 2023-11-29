@@ -56,20 +56,20 @@ func (f FileDatabase) Save() error { //това запазва променит�
 	//просто мапът е от юзъри, които поддържат круд операциите и е все едно аналогия на базата
 	//и затова няма нужда от тия функции, защото тях ги има за самите юзъри
 	//data, err := yaml.Marshal(f.users)
-	data, err := json.Marshal(f.users)
+	data, err := json.Marshal(f.users)//подобно - правим си базата във файлов формат
 	if err != nil {
 		return err
 	}
-	file, err := os.OpenFile(FileDatabasePath, os.O_CREATE|os.O_TRUNC, 0644)
+	file, err := os.OpenFile(FileDatabasePath, os.O_CREATE|os.O_TRUNC, 0644)//отваряме файла
 	defer file.Close()
-	_, err = file.Write(data)
+	_, err = file.Write(data)//записваме инфото във файла
 	return err
 }
 
 func (f FileDatabase) Write() map[int]model.UserDefinition {
 	f.users = model.Collection
 
-	data, err := yaml.Marshal(f.users)
+	data, err := yaml.Marshal(f.users)//правим мапа във формат, годен за записване в yaml
 
 	if err != nil {
 
@@ -77,7 +77,7 @@ func (f FileDatabase) Write() map[int]model.UserDefinition {
 	}
 
 	//fmt.Println(f.users)
-	err2 := os.WriteFile(FileDatabasePath, data, 0)
+	err2 := os.WriteFile(FileDatabasePath, data, 0)//и тук си записваме вече годните данни в yaml формат в yaml файла, който ни е базата
 
 	if err2 != nil {
 
